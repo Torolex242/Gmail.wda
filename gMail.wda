@@ -1,0 +1,25 @@
+Session is emailSMTPSession
+Session..ServerAddress = "mail.******.net"
+Session..Name = "********@*****.it"
+Session.Password = Decrypt("******","******")
+Session..Port = 465
+Session..Option = optionTLS
+
+IF NOT Session.StartSession() THEN
+    Error("Unable to connect to the SMTP server.", ErrorInfo())
+    RETURN
+END
+
+MyMessage is Email
+MyMessage.Sender = E_MailToken
+MyMessage.Subject = Text1
+
+MyMessage = Text1
+
+IF Session.SendMessage(MyMessage) = False THEN
+  Error("Message not sent.", ErrorInfo())
+ELSE
+  ToastDisplay("Message sent", toostShort, vaMiddel, haCenter)
+END
+
+Session.CloseSession()
